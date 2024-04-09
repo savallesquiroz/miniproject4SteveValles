@@ -1,13 +1,35 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls</title>
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Polls</h1>
+        </header>
+        <main>
+            {% if latest_question_list %}
+                <div class="poll-list">
+                {% for question in latest_question_list %}
+                    <div class="poll-card">
+                        <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                    </div>
+                {% endfor %}
+                </div>
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+        </main>
+        <footer>
+            <p>© 2024 Polls Inc.</p>
+        </footer>
+    </div>
+</body>
+</html>
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
